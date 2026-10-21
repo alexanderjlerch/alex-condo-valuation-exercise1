@@ -831,11 +831,11 @@ with vtab:
                     ],axis=-1)
                     fig_map.add_trace(go.Scattermap(
                         lat=sub.Latitude,lon=sub.Longitude,mode='markers',name=label,
-                        marker=dict(size=11,color=color,opacity=.85),customdata=custom,
+                        marker=dict(size=6,color=color,opacity=.85),customdata=custom,
                         hovertemplate='<b>Property %{customdata[0]}</b><br>Sale date: %{customdata[1]}<br>Sale price: $%{customdata[2]:,.0f}<br>Recorded market: $%{customdata[3]:,.0f}<br>Sale vs. market: %{customdata[4]:+.1f}%<br>Subdivision: %{customdata[5]}<extra></extra>'
                     ))
                 fig_map.update_layout(
-                    map=dict(style='satellite-streets' if external_tiles else 'white-bg',center=dict(lat=float(geo.Latitude.mean()),lon=float(geo.Longitude.mean())),zoom=9),
+                    map=dict(style='satellite-streets' if external_tiles else 'white-bg',center=dict(lat=float(geo.Latitude.mean()),lon=float(geo.Longitude.mean())),zoom=9,maxzoom=18),
                     height=570,margin=dict(l=0,r=0,t=15,b=0),legend=dict(orientation='h',y=1.02,x=0),
                     uirevision='condo_map')
                 st.plotly_chart(fig_map,use_container_width=True,key='geographic_sale_map')
