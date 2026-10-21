@@ -781,7 +781,7 @@ with vtab:
             fig=px.scatter(view,x='market_value',y='cv_market_value',color='complex_label',hover_data=['prop_id','sale_price','comparison_price'],labels={'market_value':'Existing roll market value','cv_market_value':'Cross-validated model market value'},title='Sale properties: existing vs. model-estimated market value')
             st.plotly_chart(fig,use_container_width=True)
     st.markdown('#### Geographic sales analysis — sale price versus recorded market value')
-    external_tiles=st.checkbox('Load external OpenStreetMap map tiles (office approval required)',value=False,key='external_tiles')
+    external_tiles=st.checkbox('Load satellite imagery (office approval required)',value=False,key='external_tiles')
     st.caption('Markers use ACTUAL transaction sale price relative to recorded market value, not the projected 2027 estimate. Red: sold below; yellow: near; green: sold above. The comparison is exploratory until roll and sale dates are aligned.')
     if 'Latitude' not in selected.columns or 'Longitude' not in selected.columns:
         st.warning('The uploaded sales data does not include Latitude and Longitude columns. Add both to display the map.')
@@ -835,11 +835,11 @@ with vtab:
                         hovertemplate='<b>Property %{customdata[0]}</b><br>Sale date: %{customdata[1]}<br>Sale price: $%{customdata[2]:,.0f}<br>Recorded market: $%{customdata[3]:,.0f}<br>Sale vs. market: %{customdata[4]:+.1f}%<br>Subdivision: %{customdata[5]}<extra></extra>'
                     ))
                 fig_map.update_layout(
-                    map=dict(style='open-street-map' if external_tiles else 'white-bg',center=dict(lat=float(geo.Latitude.mean()),lon=float(geo.Longitude.mean())),zoom=9),
+                    map=dict(style='satellite-streets' if external_tiles else 'white-bg',center=dict(lat=float(geo.Latitude.mean()),lon=float(geo.Longitude.mean())),zoom=9),
                     height=570,margin=dict(l=0,r=0,t=15,b=0),legend=dict(orientation='h',y=1.02,x=0),
                     uirevision='condo_map')
                 st.plotly_chart(fig_map,use_container_width=True,key='geographic_sale_map')
-                st.caption('External map tiles are OFF by default. Enabling them requests tiles from an external provider; confirm office approval. Multiple sales at the same coordinates may overlap.')
+                st.caption('Satellite imagery is OFF by default. Enabling it requests Esri/ArcGIS imagery; confirm office approval. Multiple sales at the same coordinates may overlap.')
     st.info('To value ALL condos (including unsold parcels), upload a complete condo inventory with property characteristics. The sales-only file cannot establish full-roll coverage.')
 with rtab:
     st.subheader('Ratio study — existing vs. proposed model')
