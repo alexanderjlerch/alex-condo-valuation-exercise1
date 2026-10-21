@@ -821,7 +821,7 @@ with vtab:
                 geo['sale_date_display']=geo.sale_date.dt.strftime('%Y/%m/%d')
                 geo['property_display']=geo.prop_id.astype('Int64').astype(str)
                 fig_map=go.Figure()
-                for label,color in [('Below market','#e53935'),('Near market','#fbc02d'),('Above market','#2e7d32')]:
+                for label,color in [('Below market','#e53935'),('Near market','#fbc02d'),('Above market','#00E5FF')]:
                     sub=geo[geo.sale_category==label]
                     if sub.empty: continue
                     custom=np.stack([
